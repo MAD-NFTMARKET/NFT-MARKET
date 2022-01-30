@@ -1,97 +1,106 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect } from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
-import BodyContent from "./components/BodyContent";
-import MainArea from "./components/MainArea";
-import { ethers } from "ethers";
+// Load Component
+import MainArea from './components/MainArea'
+import MintForm from './components/MintForm'
+import Navigation from './components/Navigation'
 
-import web3 from "./connection/web3";
-import Web3Context from "./store/web3-context";
-import CollectionContext from "./store/collection-context";
-import contractABI from "./abis/Funding.json";
-import { fundingAddress } from "./constants/address";
-// const contractABI = require('./abis/Funding.json')
-// import MyNFT from './Abis/MyNFT'
-// import MADTOKEN from './Abis/MADTOKEN'
-// const MyNFT = require('./Abis/MyNFT.json')
+// Metamask 데이터 가져오기
+import web3 from './connection/web3'
+import Web3Context from './store/web3-context'
+
+// Contract 데이터 가져오기
+import { ethers } from 'ethers'
+import contractABI from './abis/MADTOKEN.json'
+import CollectionContext from './store/collection-context'
+import { MADTOKEN_ADDRESS } from './constants/address'
+
 const App = () => {
-  const web3Ctx = useContext(Web3Context);
-  const collectionCtx = useContext(CollectionContext);
-  // console.log("1", collectionCtx.collection);
-  //내가 만든 Contract 추가
+  const web3Ctx = useContext(Web3Context)
+  const collectionCtx = useContext(CollectionContext)
+
   useEffect(() => {
-    // Check if the user has Metamask active
+    // Metamask 계정 확인
     if (!web3) {
       window.alert(
-        "Non-Ethereum browser detected. You should consider trying MetaMask!"
-      );
-      return;
+        'Non-Ethereum browser detected. You should consider trying MetaMask!',
+      )
+      return
     }
 
-    // Function to fetch all the blockchain data
+    // Load BlockChain Data
     const loadBlockchainData = async () => {
-      // Request accounts acccess if needed
       try {
-        await window.ethereum.request({ method: "eth_requestAccounts" });
+        await window.ethereum.request({ method: 'eth_requestAccounts' })
       } catch (error) {
-        console.error(error);
+        console.error(error)
       }
 
       // Load account
-      const accounts = await web3Ctx.loadAccount(web3);
+      const accounts = await web3Ctx.loadAccount(web3)
       // Load Network ID
-      const networkId = await web3Ctx.loadNetworkId(web3);
-      console.log("accounts!!" + accounts);
-      console.log("network ID!!" + networkId);
+      const networkId = await web3Ctx.loadNetworkId(web3)
+      console.log('accounts!!' + accounts)
+      console.log('network ID!!' + networkId)
 
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      // Load Contract
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
       const contract = collectionCtx.loadContract(
-        fundingAddress,
+        MADTOKEN_ADDRESS,
         contractABI.abi,
-        provider
-      );
-      console.log("contract address!!" + contract.address);
+        provider,
+      )
+      console.log('contract address!!' + contract.address)
 
-      //mint 버튼이 떠야함 -> main.js에서 MintForm이 떠야하는데 그러려면 아래 작업을 해주어야함
+      // Load contractWithSigner
+      const privateKey =
+        '0x61f8851ecd6ff6fb0c13639d55ffd0e1b4bbabcb210fcd0014095395c31c117f' // MetaMask PrivateKey
+      const contractWithSigner = collectionCtx.loadContractWithSigner(
+        contract,
+        privateKey,
+        provider,
+      )
+      console.log('contractWithSigner!!' + contractWithSigner)
+
       if (contract) {
-        console.log("Collection contract deployed to ropsten detwork");
+        console.log('Collection contract deployed to ropsten detwork')
+        console.log('collectionContract address', contract.address)
 
-        console.log("collectionContract address", contract); //address 어떻게 찍나?
-        let totalSupply = await collectionCtx.loadTotalSupply(contract);
-        collectionCtx.setNftIsLoading(false); // 이렇게 호출하는게 맞나?
-        collectionCtx.loadCollection(contract, totalSupply);
+        let totalSupply = await collectionCtx.loadTotalSupply(contract)
+        collectionCtx.setNftIsLoading(false)
+        collectionCtx.loadCollection(contract, totalSupply)
       } else {
         window.alert(
-          "NFTMarketplace contract not deployed to detected network."
-        );
+          'NFTMarketplace contract not deployed to detected network.',
+        )
       }
 
       // Metamask Event Subscription - Account changed
-      window.ethereum.on("accountsChanged", (accounts) => {
-        web3Ctx.loadAccount(web3);
-      });
+      window.ethereum.on('accountsChanged', (accounts) => {
+        web3Ctx.loadAccount(web3)
+      })
 
       // Metamask Event Subscription - Network changed
-      window.ethereum.on("chainChanged", (networkId) => {
-        window.location.reload();
-      });
-    };
+      window.ethereum.on('chainChanged', (networkId) => {
+        window.location.reload()
+      })
+    }
 
-    loadBlockchainData();
-  }, []);
-
-  // console.log(web3);
-  // console.log(collectionCtx.contract);
-  // console.log(web3Ctx.account);
-
-  const showContent = web3 && collectionCtx.contract && web3Ctx.account;
+    loadBlockchainData()
+  }, [])
 
   return (
-    <React.Fragment>
-      {showContent && <MainArea />}
-      {/* <MainArea /> */}
-      <BodyContent />
-    </React.Fragment>
-  );
-};
+    <>
+      <Router>
+        <Navigation />
+        <Routes>
+          <Route path="/" element={<MainArea />} />
+          <Route path="/MintNFT" element={<MintForm />} />
+        </Routes>
+      </Router>
+    </>
+  )
+}
 
-export default App;
+export default App

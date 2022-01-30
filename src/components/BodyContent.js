@@ -1,36 +1,37 @@
-import React from "react";
-import styled from "styled-components";
-import { InnerLayout } from "../Layouts";
-// import BlogsSection from "./BlogsSection";
-import ContactSection from "./ContactSection";
-import DemonstrationSection from "./DemonstrationSection";
-import GradientCardsSection from "./GradientCardsSection";
-import MainTitle from "./MainTitle";
-// import SellerCard from "./SellerCard";
+import React from 'react'
+import styled from 'styled-components'
+import { InnerLayout } from '../Layouts'
+import BlogsSection from './BlogsSection'
+import ContactSection from './ContactSection'
+// import DemonstrationSection from './DemonstrationSection'
+import GradientCardsSection from './GradientCardsSection'
+import MainTitle from './MainTitle'
+// import SellerCard from './SellerCard'
 
+// 안쓰는 Conponent 주석 처리함
 function BodyContent() {
   return (
     <BodyContentStyled>
       <InnerLayout>
         <MainTitle
-          title={"Top Sellers This Month"}
-          subtitle={"All Entrepreneurs"}
+        //   title={'Top Sellers This Month'}
+        //   subtitle={'All Entrepreneurs'}
         />
         {/* <div className="sellercards">
-                    <SellerCard />
-                    <SellerCard />
-                    <SellerCard />
-                </div> */}
-        {/* <BlogsSection /> */}
+          <SellerCard />
+          <SellerCard />
+          <SellerCard />
+        </div> */}
+        <BlogsSection />
         <GradientCardsSection />
-        <DemonstrationSection />
+        {/* <DemonstrationSection /> */}
       </InnerLayout>
       <ContactSection />
       <footer>
         <p>Copyright ©YourName. All Rights Reserved</p>
       </footer>
     </BodyContentStyled>
-  );
+  )
 }
 
 const BodyContentStyled = styled.div`
@@ -53,6 +54,6 @@ const BodyContentStyled = styled.div`
       opacity: 0.7;
     }
   }
-`;
+`
 
-export default BodyContent;
+export default BodyContent
