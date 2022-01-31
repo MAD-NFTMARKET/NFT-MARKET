@@ -1,26 +1,23 @@
-// import React from "react";
-import { useContext } from "react";
+import React from 'react'
+import { useContext } from 'react'
 
-import { SectionStyled } from "../Layouts";
-import GradientCard from "./GradientCard";
-import MainTitle from "./MainTitle";
-import styled from "styled-components";
-import CtaButton from "./CtaButton";
-import CollectionContext from "../store/collection-context";
+import { SectionStyled } from '../Layouts'
+import GradientCard from './GradientCard'
+import MainTitle from './MainTitle'
+import styled from 'styled-components'
+import CtaButton from './CtaButton'
+import CollectionContext from '../store/collection-context'
 function GradientCardsSection() {
-  // console.log("여기다이눔아" + Collcetions);
-  const collectionCtx = useContext(CollectionContext);
-  // console.log(collectionCtx
-  // console.log(collectionCtx.collection);
+  const collectionCtx = useContext(CollectionContext)
   return (
     <GradientCardsSectionStyled>
       <SectionStyled>
         <div className="title-con">
           <MainTitle
-            title={"New Upcoming Items"}
-            subtitle={"Discover Upcoming Items"}
+            title={'New Upcoming Items'}
+            subtitle={'Discover Upcoming Items'}
             para={
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis accumsan nisi Ut ut felis congue nisl hendrerit commodo."
+              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis accumsan nisi Ut ut felis congue nisl hendrerit commodo.'
             }
           />
         </div>
@@ -35,15 +32,15 @@ function GradientCardsSection() {
                     title={value.title}
                   />
                 </>
-              );
+              )
             })}
         </div>
         <div className="load">
-          <CtaButton name={"View More"} />
+          <CtaButton name={'View More'} />
         </div>
       </SectionStyled>
     </GradientCardsSectionStyled>
-  );
+  )
 }
 
 const GradientCardsSectionStyled = styled.div`
@@ -51,6 +48,6 @@ const GradientCardsSectionStyled = styled.div`
     padding-top: 3rem;
     text-align: center;
   }
-`;
+`
 
-export default GradientCardsSection;
+export default GradientCardsSection

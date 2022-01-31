@@ -1,30 +1,17 @@
-import styled from "styled-components";
-import time from "../img/time.svg";
-import heart from "../img/heart.svg";
+import styled from 'styled-components'
+import time from '../img/time.svg'
+import heart from '../img/heart.svg'
 
 function GradientCard({ key, image, title }) {
-  // console.log("right? ", image);
   return (
     <GradientCardStyled>
       <div className="g-card">
         <div className="inner-content">
           <div className="image">
             <img src={`https://ipfs.infura.io/ipfs/${image}`} alt="" />
-            {/* <div className="name">
-                            <img src={avatar} alt="" />
-                            <p>{name}</p>
-                        </div> */}
           </div>
           <div className="card-content">
             <h6 className="card-title">{title}</h6>
-            {/* <p>
-              Price <span className="price">{price}</span> &nbsp; &nbsp;{" "}
-              <span className="l-text">1 of 15</span>
-            </p> */}
-            {/* <p>
-              Description : : &nbsp; <span className="price">{price}</span>{" "}
-              <span className="description">{description}</span>{" "}
-            </p> */}
             <div className="duration">
               <p>
                 <img src={time} alt="" /> 7 Hours Ago
@@ -33,13 +20,11 @@ function GradientCard({ key, image, title }) {
                 <img src={heart} alt="" /> 200 Likes
               </p>
             </div>
-            {/* <div className="cta-btn">{ctaButton1}</div>
-            <div className="cta-btn">{ctaButton2}</div> */}
           </div>
         </div>
       </div>
     </GradientCardStyled>
-  );
+  )
 }
 
 const GradientCardStyled = styled.div`
@@ -145,5 +130,5 @@ const GradientCardStyled = styled.div`
       }
     }
   }
-`;
-export default GradientCard;
+`
+export default GradientCard

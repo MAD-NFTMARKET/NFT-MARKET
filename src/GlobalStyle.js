@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
     *{
@@ -67,6 +67,6 @@ const GlobalStyle = createGlobalStyle`
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         grid-gap: 2rem;
     }
-`;
+`
 
-export default GlobalStyle;
+export default GlobalStyle
