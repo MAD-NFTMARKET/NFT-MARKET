@@ -1,13 +1,13 @@
-import styled from 'styled-components'
-import time from '../img/time.svg'
-import heart from '../img/heart.svg'
+import styled from "styled-components";
+import time from "../img/time.svg";
+import heart from "../img/heart.svg";
 
 function GradientCard({ key, image, title }) {
   return (
     <GradientCardStyled>
       <div className="g-card">
         <div className="inner-content">
-          <div className="image">
+          <div className="image" key={key}>
             <img src={`https://ipfs.infura.io/ipfs/${image}`} alt="" />
           </div>
           <div className="card-content">
@@ -24,7 +24,7 @@ function GradientCard({ key, image, title }) {
         </div>
       </div>
     </GradientCardStyled>
-  )
+  );
 }
 
 const GradientCardStyled = styled.div`
@@ -130,5 +130,5 @@ const GradientCardStyled = styled.div`
       }
     }
   }
-`
-export default GradientCard
+`;
+export default GradientCard;
